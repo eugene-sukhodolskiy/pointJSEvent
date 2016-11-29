@@ -11,15 +11,15 @@
 ручную проверку событий, без значительной потери производительности
  - Удалять назначеные события из объекта
  
- Методы:
+Методы:
  - EVENT.addEventsToObj(obj); /* Добавляет события к obj, в качестве аргумента могут быть те же объекты, что и при привычном методе
 отслеживания событий */
  - EVENT.existsInList(eventname, arr); // Никому не интересный метод, короче магия :)
  
- Новые методы у объекта после выполнения EVENT.addEventsToObj(obj):
+Новые методы у объекта после выполнения EVENT.addEventsToObj(obj):
   - obj.addEvent(eventname, callback); /* callback исполниться при наступлении события eventname для объекта obj. 
  Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect] */
   - obj.delEvent(eventname); // Позволяет удалить ранее добавленное событие у объекта obj
   
- ПРИМЕЧАНИЕ: В событиях [click, mouseUp, mouseDown, mouseOver, mouseOut] по умолчанию используеться только ЛЕВАЯ кнопка мыши
+ПРИМЕЧАНИЕ: В событиях [click, mouseUp, mouseDown, mouseOver, mouseOut] по умолчанию используеться только ЛЕВАЯ кнопка мыши
  и возможности это изменить пока нет!
