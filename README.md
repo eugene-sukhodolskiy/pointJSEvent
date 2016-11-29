@@ -20,6 +20,8 @@
   - obj.addEvent(eventname, callback); /* callback исполниться при наступлении события eventname для объекта obj. 
  Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect] */
   - obj.delEvent(eventname); // Позволяет удалить ранее добавленное событие у объекта obj
+  - obj.listenEvents(); // Метод для прослушивания заданых событий у объекта obj, его необходимо вызывать внутки игрового цыкла
+  - obj.getCurrentEvents(); // Возвращает массив названий текущих, активных событий у объекта obj
   
 ПРИМЕЧАНИЕ: В событиях [click, mouseUp, mouseDown, mouseOver, mouseOut] по умолчанию используеться только ЛЕВАЯ кнопка мыши
  и возможности это изменить пока нет!
