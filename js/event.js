@@ -283,7 +283,7 @@ var getNewEvent = function(pjs){
 
             if(intersectObj){
 
-                this.events.callback.intersect(intersectObj,this);
+                this.events.callback.intersect(this,intersectObj);
 
             }
 

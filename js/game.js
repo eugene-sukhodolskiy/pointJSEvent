@@ -92,7 +92,7 @@ var Scene = function(){
         
 //        pjsev.addEventsToObj(object);
         
-//        objs.addEvent('intersect',function(obj,self){
+//        objs.addEvent('intersect',function(self,obj){
 //
 //            console.log(obj.id + ' & ' + self.id);
 //
