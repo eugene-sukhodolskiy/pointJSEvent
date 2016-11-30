@@ -17,6 +17,8 @@ var key = pjs.keyControl.initKeyControl();
 var tiles = pjs.tiles;
 var mouse = pjs.mouseControl.initMouseControl();
 
+var pjsev = new getNewEvent(pjs);
+
 
 var object = game.newRectObject({
 
@@ -58,7 +60,7 @@ var Scene = function(){
     
     this.entry = function(){
         
-        EVENT.addEventsToObj(object);
+        pjsev.addEventsToObj(object);
         
 //        object.addEvent('intersect',function(obj){
 //
