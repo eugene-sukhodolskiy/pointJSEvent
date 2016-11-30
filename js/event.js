@@ -1,8 +1,66 @@
 var getNewEvent = function(pjs){
 
     var EVENT = {};
+    
+    //    @obj - one object
+    
+    EVENT._setEventsToObjs = function(objs){
+        
+        for(var i=0;i<objs.length;i++){
+            
+            EVENT.setEventsToObj(objs[i]);
+            
+        }
+        
+    }
+    
+    EVENT.addEventToArr = function(ename,callback,objs){
 
-    EVENT.addEventsToObj = function(obj){
+        for(var i=0;i<this.length;i++){
+            
+            this[i].addEvent(ename,callback,objs);
+            
+        }
+
+    }
+    
+    EVENT.delEventFromArr = function(ename){
+        
+        for(var i=0;i<this.length;i++){
+
+            this[i].delEvent(ename);
+
+        }
+        
+    }
+    
+    EVENT.listenEventsInArr = function(){
+        
+        for(var i=0;i<this.length;i++){
+
+            this[i].listenEvents();
+
+        }
+        
+    }
+
+//    @obj - array object or one object
+    
+    EVENT.setEventsToObj = function(obj){
+        
+        if(typeof obj[0] == 'object'){
+            
+            obj.arrObjsFlag = true;
+            
+            EVENT._setEventsToObjs(obj);
+            
+            obj.addEventToArr = EVENT.addEventToArr;
+            
+            obj.delEventFromArr = EVENT.delEventFromArr;
+            
+            obj.listenEventsInArr = EVENT.listenEventsInArr;
+            
+        }
 
         // data
 
@@ -21,14 +79,26 @@ var getNewEvent = function(pjs){
         obj.events.currentList = [];
 
         // sys funcs
+        
+        if(obj.arrObjsFlag !== true){
 
-        obj.getCurrentEvents = function(){
+            obj.getCurrentEvents = function(){
 
-            return this.events.currentList;
+                return this.events.currentList;
 
+            }
+            
         }
 
         obj.listenEvents = function(){
+            
+            if(this.arrObjsFlag === true){
+                
+                this.listenEventsInArr();
+                
+                return false;
+                
+            }
 
             for(var i=0;i<this.events.currentList.length;i++){
 
@@ -49,6 +119,14 @@ var getNewEvent = function(pjs){
         }
 
         obj.addEvent = function(ename,callback,objs){
+            
+            if(this.arrObjsFlag === true){
+                
+                this.addEventToArr(ename,callback,objs);
+                
+                return false;
+                
+            }
 
             var flag = EVENT.existsInList(ename,this.events.currentList);
 
@@ -93,6 +171,14 @@ var getNewEvent = function(pjs){
         }
 
         obj.delEvent = function(ename){
+            
+            if(this.arrObjsFlag === true){
+                
+                this.delEventFromArr(ename);
+                
+                return true;
+                
+            }
 
             var flag = EVENT.existsInList(ename,this.events.currentList);
 
@@ -113,13 +199,15 @@ var getNewEvent = function(pjs){
 
         }
 
+        
         // events
+        if(obj.arrObjsFlag !== true){
 
         obj.click = function(){
 
             if((pjs.mouseControl.isPress('LEFT') || pjs.touchControl.isPress()) && (pjs.mouseControl.isInObject(this) || pjs.touchControl.isInObject(this))){
 
-                this.events.callback.click();
+                this.events.callback.click(this);
 
             }
 
@@ -129,7 +217,7 @@ var getNewEvent = function(pjs){
 
             if((pjs.mouseControl.isDown('LEFT') || pjs.touchControl.isDown()) && (pjs.mouseControl.isInObject(this) || pjs.touchControl.isInObject(this))){
 
-                this.events.callback.mouseDown();
+                this.events.callback.mouseDown(this);
 
             }
 
@@ -139,7 +227,7 @@ var getNewEvent = function(pjs){
 
             if((pjs.mouseControl.isUp('LEFT') || pjs.touchControl.isUp()) && (pjs.mouseControl.isInObject(this) || pjs.touchControl.isInObject(this))){
 
-                this.events.callback.mouseUp();
+                this.events.callback.mouseUp(this);
 
             }
 
@@ -151,7 +239,7 @@ var getNewEvent = function(pjs){
 
                 this.events.data.mouseoverFlag = true;
 
-                this.events.callback.mouseOver();
+                this.events.callback.mouseOver(this);
 
             }
 
@@ -163,7 +251,7 @@ var getNewEvent = function(pjs){
 
                 this.events.data.mouseoverFlag = false;
 
-                this.events.callback.mouseOut();
+                this.events.callback.mouseOut(this);
 
             }
 
@@ -173,7 +261,7 @@ var getNewEvent = function(pjs){
 
             if(pjs.mouseControl.isWheel('UP') && pjs.mouseControl.isInObject(this)){
 
-                this.events.callback.wheelUp();
+                this.events.callback.wheelUp(this);
 
             }
 
@@ -183,7 +271,7 @@ var getNewEvent = function(pjs){
 
             if(pjs.mouseControl.isWheel('DOWN') && pjs.mouseControl.isInObject(this)){
 
-                this.events.callback.wheelDown();
+                this.events.callback.wheelDown(this);
 
             }
 
@@ -195,10 +283,12 @@ var getNewEvent = function(pjs){
 
             if(intersectObj){
 
-                this.events.callback.intersect(intersectObj);
+                this.events.callback.intersect(intersectObj,this);
 
             }
 
+        }
+        
         }
 
     }

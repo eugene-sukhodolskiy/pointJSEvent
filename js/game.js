@@ -3,7 +3,7 @@ var width = 800;
 
 var pjs = new PointJS('2D', width, height);
 //pjs.system.initFullScale();
-//pjs.system.initFPSCheck();
+pjs.system.initFPSCheck();
 
 var log = pjs.system.log;
 var game = pjs.game;
@@ -19,24 +19,38 @@ var mouse = pjs.mouseControl.initMouseControl();
 
 var pjsev = new getNewEvent(pjs);
 
-
-var object = game.newRectObject({
-
-    position: p(10,10),
-    w: 100, h: 100,
-    fillColor: 'black'
-
-});
-
-var object2 = game.newCircleObject({
+var getObjs = function(count){
     
-    position: p(200,200),
-    radius: 50,
-    fillColor: 'red'
+    var arr = [];
     
-});
+    for(var i=0;i<count;i++){
+        
+        arr.push(game.newRectObject({
+
+            position: p(math.random(0,width),math.random(0,height)),
+            w: 40, h: 40,
+            fillColor: 'green'
+
+        }));
+
+    }
+
+    return arr;
+    
+}
+
 
 var Scene = function(){
+    
+    var objs = getObjs(1000);
+    
+    var object2 = game.newCircleObject({
+
+        position: p(0,0),
+        radius: 10,
+        fillColor: 'red'
+
+    });
     
     this.update = function(){
         
@@ -44,14 +58,22 @@ var Scene = function(){
         
         game.fill('white');
         
-        object.draw();
+        OOP.drawArr(objs);
         
-        object.listenEvents();
-        
+        objs.listenEvents();
         
 //        object2.draw();
-        
+//        
 //        object2.moveTimeC(mouse.getPositionS(),10);
+        
+        brush.drawText({
+            
+            text: pjs.system.getFPS(),
+            x: 10, y: 10,
+            size: 35,
+            color: 'blue'
+            
+        });
         
         if(mouse.isPress('RIGHT'))
             game.stop();
@@ -60,55 +82,63 @@ var Scene = function(){
     
     this.entry = function(){
         
-        pjsev.addEventsToObj(object);
+        pjsev.setEventsToObj(objs);
+
+        objs.addEvent('click',function(t){
+
+            t.fillColor = 'yellow';
+
+        });
         
-//        object.addEvent('intersect',function(obj){
+//        pjsev.addEventsToObj(object);
+        
+//        objs.addEvent('intersect',function(obj,self){
 //
-//            console.log(obj.id);
+//            console.log(obj.id + ' & ' + self.id);
 //
 //        },object2);
-        
-        object.addEvent('wheelUp',function(){
-
-            console.log('up');
-
-        });
-        
-        object.addEvent('wheelDown',function(){
-
-            console.log('down');
-
-        });
-        
-        object.addEvent('click',function(){
-            
-            console.log('click');
-            
-        });
-        
-        object.addEvent('mouseOver',function(){
-
-            console.log('over');
-
-        });
-        
-        object.addEvent('mouseOut',function(){
-
-            console.log('out');
-
-        });
-        
-        object.addEvent('mouseDown',function(){
-
-            console.log('mouseDown');
-
-        });
-        
-        object.addEvent('mouseUp',function(){
-
-            console.log('mouseUp');
-
-        });
+//        
+//        objs.addEvent('wheelUp',function(self){
+//
+//            console.log(self.id + ' up');
+//
+//        });
+//        
+//        objs.addEvent('wheelDown',function(){
+//
+//            console.log(self.id + ' down');
+//
+//        });
+//        
+//        objs.addEvent('click',function(){
+//            
+//            console.log(self.id + ' click');
+//            
+//        });
+//        
+//        objs.addEvent('mouseOver',function(){
+//
+//            console.log(self.id + ' over');
+//
+//        });
+//        
+//        objs.addEvent('mouseOut',function(){
+//
+//            console.log(self.id + ' out');
+//
+//        });
+//        
+//        objs.addEvent('mouseDown',function(){
+//
+//            console.log(self.id + ' mouseDown');
+//
+//        });
+//        
+//        objs.addEvent('mouseUp',function(){
+//
+//            console.log(self.id + ' mouseUp');
+//
+//        });
         
         
     }
