@@ -1,4 +1,4 @@
-# pointJSEvent v0.01
+# pointJSEvent v0.02
 
 Любые дополнения / усовершенствования данного дополнения к движку point.js приветствуются.
 
@@ -17,11 +17,27 @@
  - EVENT.existsInList(eventname, arr); // Никому не интересный метод, короче магия :)
  
 Новые методы у объекта после выполнения EVENT.addEventsToObj(obj):
-  - obj.addEvent(eventname, callback); /* callback исполниться при наступлении события eventname для объекта obj. 
- Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect] */
+  - obj.addEvent(eventname, callback); /* callback исполниться при наступлении события eventname для объекта obj. В callback будет отдана в качестве аргумента ссылка на текущий объект obj;
+ Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect], в callback последнего будет передан в качестве второго параметра ссылка на объект пересечения, а первого - сыылка на текущий объект */
   - obj.delEvent(eventname); // Позволяет удалить ранее добавленное событие у объекта obj
   - obj.listenEvents(); // Метод для прослушивания заданых событий у объекта obj, его необходимо вызывать внутки игрового цыкла
   - obj.getCurrentEvents(); // Возвращает массив названий текущих, активных событий у объекта obj
   
-ПРИМЕЧАНИЕ: В событиях [click, mouseUp, mouseDown, mouseOver, mouseOut] по умолчанию используеться только ЛЕВАЯ кнопка мыши
- и возможности это изменить пока нет!
+В версии 0.02 была добавлена возможность применить методы addEventsToObj, addEvent, delEvent, listenEvents к массиву объектов, при условии, что этот массив был проинициализирован методом addEventsToObj. 
+Пример:
+
+var EV = getNewEvent(pjs);
+
+function gen(){
+ // Генерация массива объектов
+}
+
+var arr = gen();
+
+EV.addEventsToObj(arr);
+
+arr.addEvent('click',function(self){
+ self.fillColor = 'red';
+});
+ 
+ПРИМЕЧАНИЕ: В событиях [click, mouseUp, mouseDown, mouseOver, mouseOut] по умолчанию используеться только ЛЕВАЯ кнопка мыши и touch тап, возможности это изменить пока нет! При отслеживании событий более 1000 объектов одновременно, возможны заметные потери FPS.
