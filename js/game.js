@@ -90,7 +90,8 @@ var Scene = function(){
 
         });
         
-//        pjsev.addEventsToObj(object);
+//        objs.delEvent('click');
+        
         
 //        objs.addEvent('intersect',function(self,obj){
 //

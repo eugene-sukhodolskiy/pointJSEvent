@@ -176,9 +176,11 @@ var getNewEvent = function(pjs){
                 
             }
 
-            var flag = EVENT.existsInList(ename,this.events.currentList);
+//            var flag = EVENT.existsInList(ename,this.events.currentList);
+            
+            var flag = this.events.currentList.indexOf(ename);
 
-            if(flag === false)
+            if(flag === -1)
                 return false;
 
             this.events.currentList.splice(flag,1);
@@ -288,20 +290,6 @@ var getNewEvent = function(pjs){
         }
 
     }
-
-    EVENT.existsInList = function(ename,arr){
-
-        for(var i=0; i<arr.length; i++){
-
-            if(arr[i] == ename)
-                return i;
-
-        }
-
-        return false;
-
-    }
-    
     
     return EVENT;
 }
