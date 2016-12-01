@@ -17,27 +17,26 @@
  
 Новые методы у объекта после выполнения EVENT.addEventsToObj(obj):
   - <code>obj.addEvent(eventname, callback); /* callback исполниться при наступлении события eventname для объекта obj. В callback будет отдана в качестве аргумента ссылка на текущий объект obj;
- Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect], в callback последнего будет передан в качестве второго параметра ссылка на объект пересечения, а первого - сыылка на текущий объект */
-  - obj.delEvent(eventname); // Позволяет удалить ранее добавленное событие у объекта obj
-  - obj.listenEvents(); // Метод для прослушивания заданых событий у объекта obj, его необходимо вызывать внутки игрового цыкла
-  - obj.getCurrentEvents(); // Возвращает массив названий текущих, активных событий у объекта obj
-  </code>
+ Список поддерживаемых событий: [click, mouseUp, mouseDown, mouseOver, mouseOut, wheelUp, wheelDown, intersect], в callback последнего будет передан в качестве второго параметра ссылка на объект пересечения, а первого - сыылка на текущий объект */</code>
+  - <code>obj.delEvent(eventname); // Позволяет удалить ранее добавленное событие у объекта obj</code>
+  - <code>obj.listenEvents(); // Метод для прослушивания заданых событий у объекта obj, его необходимо вызывать внутки игрового цыкла</code>
+  - <code>obj.getCurrentEvents(); // Возвращает массив названий текущих, активных событий у объекта obj</code>
+  
   
 В версии 0.02 была добавлена возможность применить методы addEventsToObj, addEvent, delEvent, listenEvents к массиву объектов, при условии, что этот массив был проинициализирован методом addEventsToObj. 
 Пример:
 
-<code>
-var EV = getNewEvent(pjs);
 
-function gen(){
+<code>var EV = getNewEvent(pjs);</code>
+
+<code>function gen(){
  // Генерация массива объектов
-}
+}</code>
+<code>var arr = gen();</code>
 
-var arr = gen();
+<code>EV.addEventsToObj(arr);</code>
 
-EV.addEventsToObj(arr);
-
-arr.addEvent('click',function(self){
+<code>arr.addEvent('click',function(self){
  self.fillColor = 'red';
 });
 </code>
