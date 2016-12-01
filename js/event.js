@@ -2,8 +2,6 @@ var getNewEvent = function(pjs){
 
     var EVENT = {};
     
-    //    @obj - one object
-    
     EVENT._setEventsToObjs = function(objs){
         
         for(var i=0;i<objs.length;i++){
@@ -43,8 +41,6 @@ var getNewEvent = function(pjs){
         }
         
     }
-
-//    @obj - array object or one object
     
     EVENT.setEventsToObj = function(obj){
         
